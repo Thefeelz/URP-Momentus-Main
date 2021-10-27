@@ -68,7 +68,7 @@ public class PlayerAbilities : MonoBehaviour
             startRotation = myStartingPosition.transform.rotation;
             allEnemiesAttacked = false;
             circuitBreakerReady = false;
-            GetComponent<PlayerMovement>().enabled = false;
+            GetComponent<P_Movement>().enabled = false;
             GetComponent<mouseLook>().enabled = false;
             camTransitioning = true;
             usingSpecial = true;
@@ -175,7 +175,7 @@ public class PlayerAbilities : MonoBehaviour
                 transform.rotation = startRotation;
                 circuitBreakerReady = true;
                 killCount = 0;
-                GetComponent<PlayerMovement>().enabled = true;
+                GetComponent<P_Movement>().enabled = true;
                 GetComponent<mouseLook>().enabled = true;
                 usingSpecial = false;
                 camTransitioning = true;
