@@ -9,10 +9,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] Image OverchargeBar;
     [SerializeField] Image healthBarDots;
 
-    [SerializeField] Image airDashImage;
-
     CharacterStats ourPlayer;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +23,5 @@ public class PlayerUI : MonoBehaviour
         HealthBar.fillAmount = ourPlayer.GetPlayerHealth() / ourPlayer.GetPlayerMaxHealth();
         OverchargeBar.fillAmount = ourPlayer.GetPlayerOvercharge() / ourPlayer.GetPlayerMaxOvercharge();
         healthBarDots.fillAmount = HealthBar.fillAmount;
-    }
-    public void UpdateAirDashFill(float fillAmount)
-    {
-        airDashImage.fillAmount = fillAmount;
     }
 }

@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class P_Input : MonoBehaviour
 {
-    P_CoolDownManager coolDownManager;
     P_GroundSlide groundSlide;
     P_Movement movement;
 
     A_BladeDance bladeDance;
-    A_AirDash airDash;
     // Start is called before the first frame update
     void Awake()
     {
-        coolDownManager = GetComponent<P_CoolDownManager>();
         groundSlide = GetComponent<P_GroundSlide>();
         movement = GetComponent<P_Movement>();
         bladeDance = GetComponent<A_BladeDance>();
-        airDash = GetComponent<A_AirDash>();
     }
 
     // Update is called once per frame
@@ -29,16 +25,8 @@ public class P_Input : MonoBehaviour
     void GetUserInput()
     {
         // ==========OVERCHARGE ABILITIES==========
-        if (Input.GetKeyDown(KeyCode.Alpha1)) 
-        { 
-            if(bladeDance.Ability_BladeDance()) 
-                coolDownManager.AddCooldownToList(bladeDance); 
-        }
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (airDash.UseAirDash())
-                coolDownManager.AddCooldownToList(airDash);
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) { bladeDance.Ability_BladeDance(); }
+
         // ======================================
         // ==========CHARACTER MOVEMENT==========
         // ======================================
