@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_AbilityIcon : MonoBehaviour
 {
@@ -17,5 +18,9 @@ public class UI_AbilityIcon : MonoBehaviour
         
     }
     public void ButtonAbilityReadyComplete() { anim.SetBool("AbilityReady", false); }
-    public void ButtonAbilityReadyStart() { anim.SetBool("AbilityReady", true); }
+    public void ButtonAbilityReadyStart() 
+    {
+        anim.SetBool("AbilityReady", true);
+        GetComponent<Image>().fillAmount = 1;
+    }
 }

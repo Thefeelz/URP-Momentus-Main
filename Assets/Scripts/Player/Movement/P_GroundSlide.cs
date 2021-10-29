@@ -105,11 +105,11 @@ public class P_GroundSlide : MonoBehaviour
         Vector3 newpos = (transform.forward + transform.position);
         newpos = new Vector3(newpos.x, playerCollider.bounds.center.y - playerCollider.bounds.extents.y + 0.1f, newpos.z);
         // Physics.Linecast(transform.position, newpos, out hit, 6);
-        Physics.Linecast(transform.position + transform.forward / 2, transform.position + transform.forward * 2, out hit);
+        Physics.Linecast(transform.position + transform.forward, transform.position + transform.forward * 2, out hit);
 
         if (hit.collider)
             Debug.Log(hit.collider.name);
-        if (elapsedTime >= slideDuration || hit.collider != null)
+        if (elapsedTime >= slideDuration || (hit.collider != null))
         {
             postProcessingEffects.weight = 0;
             sliding = false;

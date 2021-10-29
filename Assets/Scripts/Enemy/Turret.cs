@@ -16,7 +16,7 @@ public class Turret : MonoBehaviour
     enum TurretState  {Waiting, Attacking, Asleep};
     TurretState state;
 
-    PlayerAbilities myPlayer;
+    P_Input myPlayer;
     Animator anim;
 
     float elapsedChargeTime = 0f;
@@ -27,7 +27,7 @@ public class Turret : MonoBehaviour
     void Start()
     {
         state = TurretState.Asleep;
-        myPlayer = FindObjectOfType<PlayerAbilities>();
+        myPlayer = FindObjectOfType<P_Input>();
         anim = GetComponent<Animator>();
     }
 
