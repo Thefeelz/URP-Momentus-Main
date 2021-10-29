@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyChaseState : MonoBehaviour
 {
-    P_Movement player;
+    PlayerMovement player;
     [SerializeField] float maxDetectionRange;
     [SerializeField] float chaseStopRange;
     [SerializeField] Animator animController;
@@ -17,7 +17,7 @@ public class EnemyChaseState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<P_Movement>();
+        player = FindObjectOfType<PlayerMovement>();
     }
 
     // Update is called once per frame

@@ -39,7 +39,7 @@ public class EnemyBad : MonoBehaviour
     {
         return beenAttacked;
     }
-   public void SetBeenAttacked(bool value)
+    public void SetBeenAttacked(bool value)
     {
         beenAttacked = value;
         if(value)

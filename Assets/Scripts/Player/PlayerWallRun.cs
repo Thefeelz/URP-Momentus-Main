@@ -10,7 +10,7 @@ public class PlayerWallRun : MonoBehaviour
     RaycastHit[] hits;
 
     Rigidbody playerBody;
-    P_Movement playerMovement;
+    PlayerMovement playerMovement;
     bool isWallRunning;
     Vector3 lastWallPosition;
     Vector3 lastWallNormal;
@@ -24,7 +24,7 @@ public class PlayerWallRun : MonoBehaviour
     void Start()
     {
         playerBody = GetComponent<Rigidbody>();
-        playerMovement = GetComponent<P_Movement>();
+        playerMovement = GetComponent<PlayerMovement>();
 
         // Initialize Raycast Directions
         directions = new Vector3[] 
