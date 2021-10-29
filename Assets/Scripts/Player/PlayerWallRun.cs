@@ -48,7 +48,7 @@ public class PlayerWallRun : MonoBehaviour
             {
                 Vector3 dir = transform.TransformDirection(directions[i]);
                 Physics.Raycast(transform.position, dir, out hits[i], 1);
-                if(hits[i].collider !=null)
+                if(hits[i].collider !=null && hits[i].collider.GetComponent<WallRunnable>())
                 {
                     Debug.DrawRay(transform.position, dir * hits[i].distance, Color.green);
                 }

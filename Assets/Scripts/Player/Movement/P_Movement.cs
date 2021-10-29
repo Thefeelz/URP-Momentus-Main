@@ -10,6 +10,7 @@ public class P_Movement : MonoBehaviour
     [SerializeField] float maxPlayerspeed = 10f;
     [SerializeField] float playerJumpPower = 10f;
     [SerializeField] float playerStrafeSpeed = 10f;
+    [SerializeField] float fallMultiplier = 2.5f;
 
     public bool isGrounded = true;
     float distanceToGround;
@@ -43,9 +44,15 @@ public class P_Movement : MonoBehaviour
         {
             anim.SetBool("running", false);
         }
-        if (rb.velocity.magnitude > maxPlayerspeed)
+
+        float nonYMagnitude = (Mathf.Abs(rb.velocity.z) + Mathf.Abs(rb.velocity.x));
+        if (nonYMagnitude > maxPlayerspeed)
         {
             rb.velocity = rb.velocity.normalized * maxPlayerspeed;
+        }
+        if(rb.velocity.y < 0)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
     }
 
@@ -87,8 +94,10 @@ public class P_Movement : MonoBehaviour
     }
     public void Jump()
     {
-        //Do le jump
-        rb.AddForce(Vector3.up * playerJumpPower, ForceMode.VelocityChange);
+        if(isGrounded && ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))))
+            rb.AddForce(Vector3.up * playerJumpPower, ForceMode.VelocityChange);
+        else if (isGrounded)
+            rb.AddForce(Vector3.up * playerJumpPower * 2, ForceMode.VelocityChange);
     }
 
     private void Decelerate()
@@ -99,22 +108,22 @@ public class P_Movement : MonoBehaviour
         //If the x direction is positive, reduce it by substraction
         if (currentX > 0)
         {
-            currentX -= Mathf.Sqrt(currentX) * Time.deltaTime * playerDeceleration;
+            currentX -= Mathf.Sqrt(currentX) * Time.fixedDeltaTime * playerDeceleration;
         }
         //If the x is negative, reduce it by addition
         else if (currentX < 0)
         {
-            currentX += Mathf.Sqrt(-currentX) * Time.deltaTime * playerDeceleration;
+            currentX += Mathf.Sqrt(-currentX) * Time.fixedDeltaTime * playerDeceleration;
         }
         //If the z is positive, reduce it by subtraction
         if (currentZ > 0)
         {
-            currentZ -= Mathf.Sqrt(currentZ) * Time.deltaTime * playerDeceleration;
+            currentZ -= Mathf.Sqrt(currentZ) * Time.fixedDeltaTime * playerDeceleration;
         }
         //If the z is negative, reduce it by addition
         else if (currentZ < 0)
         {
-            currentZ += Mathf.Sqrt(-currentZ) * Time.deltaTime * playerDeceleration;
+            currentZ += Mathf.Sqrt(-currentZ) * Time.fixedDeltaTime * playerDeceleration;
         }
         rb.velocity = new Vector3(currentX, rb.velocity.y, currentZ);
     }
@@ -122,15 +131,15 @@ public class P_Movement : MonoBehaviour
     public void StrafeCharacter(int rotationDirection)
     {
         //rb.rotation = rb.rotation * Quaternion.Euler(0, playerRotateSpeed * rotationDirection * Time.deltaTime, 0);
-        rb.AddForce(transform.right * rotationDirection * playerAcceleration * Time.deltaTime, ForceMode.VelocityChange);
+        rb.AddForce(transform.right * rotationDirection * playerAcceleration * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 
     public void MoveForward()
     {
-        rb.AddForce(transform.forward * playerAcceleration * Time.deltaTime, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * playerAcceleration * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
     public void MoveBackwards()
     {
-        rb.AddForce(-transform.forward * playerAcceleration * Time.deltaTime, ForceMode.VelocityChange);
+        rb.AddForce(-transform.forward * playerAcceleration * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 }

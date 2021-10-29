@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class A_BladeDance : MonoBehaviour
+public class A_BladeDance : A_OverchargeAbilities
 {
     [Header("Blade Dance")]
     [SerializeField] float dashTime;
@@ -39,8 +39,9 @@ public class A_BladeDance : MonoBehaviour
             UpdateCameraPos(usingSpecial);
     }
 
-    public void Ability_BladeDance()
+    public bool Ability_BladeDance()
     {
+        if (!abilityReady) { return false; }
         gameManager.SetActiveSpecialAbility(true);
         startPos = myStartingPosition.transform.position;
         startRotation = myStartingPosition.transform.rotation;
@@ -51,6 +52,7 @@ public class A_BladeDance : MonoBehaviour
         camTransitioning = true;
         usingSpecial = true;
         StartCoroutine(AttackEnemy());
+        return true;
     }
 
     void UpdateCameraPos(bool startingSpecial)

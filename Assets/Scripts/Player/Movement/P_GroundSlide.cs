@@ -48,12 +48,15 @@ public class P_GroundSlide : MonoBehaviour
     // Variable to store the ending position of the camera attached to the player
     Vector3 cameraPosEnd;
 
+    Collider playerCollider;
+
     // Start is called before the first frame update
     void Awake()
     {
         // Cache our Variables
         player = GetComponent<P_Movement>();
         rb = GetComponent<Rigidbody>();
+        playerCollider = GetComponentInChildren<Collider>();
     }
 
     // Update is called once per frame
@@ -97,7 +100,16 @@ public class P_GroundSlide : MonoBehaviour
         // Lerp our cameras position so it raises and lower during the slide
         Camera.main.transform.localPosition = Vector3.Lerp(cameraPosStart, cameraPosEnd, lerpPos);
         // If our slide is finished, set everything back to default values and trigger return to normal screen for our camera position and camera effects
-        if (elapsedTime >= slideDuration)
+
+        RaycastHit hit;
+        Vector3 newpos = (transform.forward + transform.position);
+        newpos = new Vector3(newpos.x, playerCollider.bounds.center.y - playerCollider.bounds.extents.y + 0.1f, newpos.z);
+        // Physics.Linecast(transform.position, newpos, out hit, 6);
+        Physics.Linecast(transform.position + transform.forward / 2, transform.position + transform.forward * 2, out hit);
+
+        if (hit.collider)
+            Debug.Log(hit.collider.name);
+        if (elapsedTime >= slideDuration || hit.collider != null)
         {
             postProcessingEffects.weight = 0;
             sliding = false;
@@ -118,7 +130,7 @@ public class P_GroundSlide : MonoBehaviour
         cameraPosEnd = Camera.main.transform.localPosition;
         cameraPosEnd.y = cameraPosStart.y - cameraDipAmount;
         // Just in case the raycast raises in the 'Y' direction, set it so the player cannot go higher while using a ground slide
-        if (endingPos.y > startingPos.y) { endingPos.y = startingPos.y; }
+        endingPos.y = startingPos.y;
         // Function to determine if the player has a clear path or not
         CalculateSlideDistance();
     }
@@ -128,14 +140,16 @@ public class P_GroundSlide : MonoBehaviour
         // Raycast hit to store our raycast hit information
         RaycastHit hit;
         // A raycast that shoots out from our feet forward relative to where we are facing
-        Physics.Raycast(transform.position, transform.forward, out hit, slideDistance, 6);
+        Physics.Raycast(transform.position, transform.forward, out hit, slideDistance);
+        
         // If the raycast hits nothing, go the full length of the slide and return
-        if (hit.collider == null) { return; }
+        if (hit.collider == null || hit.collider.GetComponent<Floor>() || hit.collider.GetComponentInParent<P_CoolDownManager>()) { return; }
         // If we are at this point, we HIT something with our raycast, see if the raycast hit point distance is less than our slide distance
         if (Vector3.Distance(transform.position, hit.point) < slideDistance)
         {
+            Debug.Log("We hit " + hit.collider.name);
             // If it is, set our ending position to where the ray made contact
-            endingPos = hit.point;
+            endingPos = hit.point - transform.forward;
             endingPos = new Vector3(endingPos.x, transform.position.y, endingPos.z);
         }
     }
