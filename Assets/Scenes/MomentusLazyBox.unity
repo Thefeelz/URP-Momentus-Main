@@ -8462,7 +8462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2733746628393997002, guid: 9f0103d7dca3ebc4bac3600fa39770ed, type: 3}
       propertyPath: playerAcceleration
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2733746628393997006, guid: 9f0103d7dca3ebc4bac3600fa39770ed, type: 3}
       propertyPath: targetCrosshair
@@ -8500,8 +8500,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2733746628393996998, guid: 9f0103d7dca3ebc4bac3600fa39770ed, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f0103d7dca3ebc4bac3600fa39770ed, type: 3}
 --- !u!1001 &7433740390236071356
 PrefabInstance:

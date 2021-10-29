@@ -108,22 +108,22 @@ public class P_Movement : MonoBehaviour
         //If the x direction is positive, reduce it by substraction
         if (currentX > 0)
         {
-            currentX -= Mathf.Sqrt(currentX) * Time.deltaTime * playerDeceleration;
+            currentX -= Mathf.Sqrt(currentX) * Time.fixedDeltaTime * playerDeceleration;
         }
         //If the x is negative, reduce it by addition
         else if (currentX < 0)
         {
-            currentX += Mathf.Sqrt(-currentX) * Time.deltaTime * playerDeceleration;
+            currentX += Mathf.Sqrt(-currentX) * Time.fixedDeltaTime * playerDeceleration;
         }
         //If the z is positive, reduce it by subtraction
         if (currentZ > 0)
         {
-            currentZ -= Mathf.Sqrt(currentZ) * Time.deltaTime * playerDeceleration;
+            currentZ -= Mathf.Sqrt(currentZ) * Time.fixedDeltaTime * playerDeceleration;
         }
         //If the z is negative, reduce it by addition
         else if (currentZ < 0)
         {
-            currentZ += Mathf.Sqrt(-currentZ) * Time.deltaTime * playerDeceleration;
+            currentZ += Mathf.Sqrt(-currentZ) * Time.fixedDeltaTime * playerDeceleration;
         }
         rb.velocity = new Vector3(currentX, rb.velocity.y, currentZ);
     }
@@ -131,15 +131,15 @@ public class P_Movement : MonoBehaviour
     public void StrafeCharacter(int rotationDirection)
     {
         //rb.rotation = rb.rotation * Quaternion.Euler(0, playerRotateSpeed * rotationDirection * Time.deltaTime, 0);
-        rb.AddForce(transform.right * rotationDirection * playerAcceleration * Time.deltaTime, ForceMode.VelocityChange);
+        rb.AddForce(transform.right * rotationDirection * playerAcceleration * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 
     public void MoveForward()
     {
-        rb.AddForce(transform.forward * playerAcceleration * Time.deltaTime, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * playerAcceleration * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
     public void MoveBackwards()
     {
-        rb.AddForce(-transform.forward * playerAcceleration * Time.deltaTime, ForceMode.VelocityChange);
+        rb.AddForce(-transform.forward * playerAcceleration * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 }
